@@ -1,0 +1,98 @@
+<%include ../public/header.html%>
+<body>
+<%include ../public/site-nav.html%>
+<div class="wp">
+    <div class="user-center">
+        <div class="user-slider">
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>我的发布<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/Developer/index.html"><i>●</i>我的插件</a></li><li  data-id="uc-using-tools"><a href="/Developer/disableList.html"><i>●</i>被禁用的插件</a></li>		    </ul>
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>统计列表<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/Developer/countList.html"><i>●</i>工具统计</a></li><li  data-id="uc-using-tools"><a href="/Developer/countInfo.html"><i>●</i>统计详情</a></li>		    </ul>
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>优惠码<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/Developer/promo.html"><i>●</i>优惠码</a></li>		    </ul>
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>我的工具<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/ToolManage/usingTools.html"><i>●</i>使用中的工具</a></li><li  data-id="uc-using-tools"><a href="/ToolManage/disableTools.html"><i>●</i>过期的工具</a></li><li  data-id="uc-using-tools"><a href="/ToolManage/myCollect.html"><i>●</i>我收藏的工具</a></li><li  data-id="uc-using-tools"><a href="/ToolManage/myPerfer.html"><i>●</i>我赞的工具</a></li>		    </ul>
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>我的收入<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/User/manage.html"><i>●</i>经营管理</a></li><li  data-id="uc-using-tools"><a href="/User/promoteLink.html"><i>●</i>推广链接</a></li><li  data-id="uc-using-tools"><a href="/RedPacket/myRedPacket.html"><i>●</i>我的红包</a></li>		    </ul>
+            <div class="menu_title_primary menu_title_cur"><span><i class="user-center-icon"></i>个人资料<i class="triangle_border_up"></i></span></div>
+            <ul class="menu_desc_primary" >
+                <li class="slider-item-cur" data-id="uc-using-tools"><a href="/User/info.html"><i>●</i>资料编辑</a></li><li  data-id="uc-using-tools"><a href="/User/active.html"><i>●</i>认证</a></li><li  data-id="uc-using-tools"><a href="/Developer/identityUpdate.html"><i>●</i>身份升级</a></li>		    </ul>
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>支付设置<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/User/paySetting.html"><i>●</i>帐号绑定</a></li>		    </ul>
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>密码与安全<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/User/accountSecurity.html"><i>●</i>修改密码</a></li>		    </ul>
+            <div class="menu_title_primary "><span><i class="user-center-icon"></i>消息列表<i class="triangle_border_down"></i></span></div>
+            <ul class="menu_desc_primary" style="display: none">
+                <li  data-id="uc-using-tools"><a href="/User/myComment.html"><i>●</i>我的评论</a></li><li  data-id="uc-using-tools"><a href="/User/myPrivateLetter.html"><i>●</i>我的私信</a></li>		    </ul>
+        </div>
+        <div class="user-wrap">
+            <div class="info-wrap">
+                <div class="personal-data-head">
+                    <div class="info-head-wrap">
+                        <div class="info-head" style="display: none">
+                            <span><input type="file" class="file"  style="position: absolute;left: -2px;top: -5px;width: 90px;height: 34px;opacity: 0;cursor: pointer;z-index:999;">点击更换头像</span>
+                            <div class="replace-head"></div>
+                        </div>
+                        <div class="head-crop1" style="    position: absolute;top: 0;left: 0;padding: 0;width: 147px;height: 147px;"><img src="http://images.skycreative.cn/avatar/Tools_20160713121504.png"></div>
+                    </div>
+                </div>
+                <div class="personal-data-info">
+                    <div class="info-data"><span>基本信息</span><span class="info-line"></span><span class="info-edit">编辑</span></div>
+                    <div class="personal-data-1">
+                        <span class="personal-data-2">用户名</span>
+                        <span id="username">Tools</span>
+                    </div>
+                    <div class="personal-data-1">
+                        <span class="personal-data-2">性别</span>
+                        <span class="gender">女</span>                        <div class="personal-sex-2" style="display: none">
+                        <span><input type="radio" value="0">保密</span>
+                        <span><input type="radio" value="1">男</span>
+                        <span><input type="radio" value="2" checked>女</span>                        </div>
+                    </div>
+                    <div class="personal-data-1">
+                        <span class="personal-data-2">微信</span>
+                        <input type="text" name="WeChat" value="不告诉你" disabled class="personal-info-val" id="wechat">
+                        <select id="per-weChat" disabled><option value="1" selected>公开</option><option   value="0">不公开</option></select>
+                    </div>
+                    <div class="personal-data-1">
+                        <span class="personal-data-2">邮箱</span>
+                        <span>tools@qq.com</span>
+                        <select id="per-email" disabled><option value="1" >公开</option><option selected value="0">不公开</option></select>
+                    </div>
+                    <div class="personal-data-1">
+                        <span class="personal-data-2">职业</span>
+                        <input type="text" name="job" value="coder &amp; designer" disabled class="personal-info-val" id="job">
+                        <select id="per-job" disabled><option value="1" selected>公开</option><option  value="0">不公开</option></select>
+                    </div>
+                    <div class="personal-data-1">
+                        <span class="personal-data-2">公司</span>
+                        <input type="text" name="CoLtd" value="" disabled class="personal-info-val" id="company">
+                        <select id="per-company" disabled><option value="1" >公开</option><option selected value="0">不公开</option></select>
+                    </div>
+                    <div class="personal-data-1">
+                        <span class="personal-data-2">真实姓名</span>
+                        <input type="text" name="Compellation" value="冯伟雄" disabled class="personal-info-val" id="name">
+                        <select id="per-name" disabled><option value="1" selected>公开</option><option  value="0">不公开</option></select>
+                    </div>
+                    <div class="personal-autograph">
+                        <span class="personal-data-2 personal-autograph-key">个性签名</span>
+                        <textarea disabled name="sign">如果觉得我的工具有用，请随意打赏，
+                            您的支持将鼓励我继续创作！</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<%include ../public/footer.html%>
+<script type="text/javascript" data-main="/assets/js/User/user.js?t=20160301" src="/assets/js/libs/require-2.1.15.js"></script>
+</body>
+</html>

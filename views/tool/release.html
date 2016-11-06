@@ -1,0 +1,287 @@
+<%include ../public/header.html%>
+<link href="/assets/css/release-main.css" rel="stylesheet"/>
+</head>
+<body>
+<!--登录注册部分-->
+<%include ../public/site-nav.html%>
+
+<!--工具发布主体-->
+<div class="wp">
+    <div class="tool-nav">
+        <span class="release-line release-line-1" id="line-1"></span>
+        <span class="release-line release-line-2" id="line-2"></span>
+        <span class="release-line release-line-3" id="line-3"></span>
+        <span class="release-line release-line-4" id="line-4"></span>
+        <div class="release-nav-step">
+                <span class="release-step"><i class="step-c1 step-current" id="step-c1">1</i></span>
+                <span class="release-step"><i class="step-c1" id="step-c2">2</i></span>
+                <span class="release-step"><i class="step-c1" id="step-c3">3</i></span>
+                <span class="release-step"><i class="step-c1" id="step-c4">4</i></span>
+                <span class="release-step"><i class="step-c1" id="step-c5">5</i></span>
+            <div class="release-explain"><span>基本信息</span><span>上传源代码</span><span>设置收费模式</span><span>完善其它信息</span><span>完成</span></div>
+        </div>
+
+    </div>
+    <div class="nav-wrap" id="release-plug">
+        <div class="tool-info tool-info-1" id="section-1">
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary">代码来源</span>
+                <select class="code-source">
+                    <option value="1" selected>原创</option>
+                    <option value="2">二次开发</option>
+                    <option value="3">转载</option>
+                </select>
+                <span class="tol-key">原作者</span>
+                <input class="tol-inp" type="text" disabled>
+            </div>
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary">工具名称</span>
+                <input class="tol-pro-name" type="text" maxlength="100">
+            </div>
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary tol-plug-icon">工具图标</span>
+                <div class="tool-icon-upload-t">
+                    <div class="tool-icon-upload-t1">
+                        <span class="upload-style">方式一：</span>
+                        <div class="tol-file">
+                            <span class="tol-select-file">上传本地图片</span>
+                            <input type="file" class="file" accept="image/*"  value="234">
+                        </div>
+                        <div class="tol-support">
+                            <p>分辨率60x60，支持jpg/gif/png格式</p>
+                        </div>
+                        <div class="img-crop img-crop1"></div>
+                    </div>
+                    <div class="tool-icon-upload-t1">
+                        <div class="tol-generate-icon">
+                            <span class="upload-style">方式二：</span>
+                            <span id="generate-icon" class="generate-icon">在线生成图标</span>
+                        </div>
+                        <div class="img-crop img-crop2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary">软件分类</span>
+                <select class="pro-fl pro-style">
+                    <option value="2">3DMAX</option><option value="15">Maya</option><option value="16">Photoshop</option><option value="1">其他软件</option>                </select>
+            </div>
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary">常用功能</span>
+                <div class="fun-zone">
+                    <span data-fid="6" class="label-icon">InitialSettings 初始设置</span><span data-fid="1" class="label-icon">StoryBoard 故事板</span><span data-fid="9" class="label-icon">Layout 布局</span><span data-fid="10" class="label-icon">Design 设计</span><span data-fid="5" class="label-icon">Modeling 模型</span><span data-fid="4" class="label-icon">Shader/Textures 材质纹理</span><span data-fid="12" class="label-icon">Camera 相机</span><span data-fid="11" class="label-icon">SetDressing 布景</span><span data-fid="13" class="label-icon">Light 灯光</span><span data-fid="3" class="label-icon">Rigging 绑定</span><span data-fid="2" class="label-icon">Animation 动画</span><span data-fid="16" class="label-icon">CFX 角色特效</span><span data-fid="17" class="label-icon">VFX 特效</span><span data-fid="14" class="label-icon">FinalSetting 最终设置与优化</span><span data-fid="15" class="label-icon">Render/Output 渲染输出</span><span data-fid="7" class="label-icon">Cut 剪辑</span><span data-fid="8" class="label-icon">Compositing 合成</span><span data-fid="18" class="label-icon">AuxiliaryFunctions 辅助功能</span><span data-fid="20" class="label-icon">Other 其它</span>                </div>
+            </div>
+        </div>
+        <div class="tool-info" id="section-2" style="display: none">
+            <textarea placeholder="请在此插入你的代码" id="tol-code" class="tool-code-insert"></textarea>
+        </div>
+        <div class="tool-info" id="section-3" style="display: none">
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary charge-mode-icon">收费方式</span>
+
+                <div class="tol-charge-mode">
+                    <div class="tol-mode-free">
+                        <span class="tol-radio" id="release-free"></span>免费
+                    </div>
+                    <div class="tol-mode-pay">
+                            <div class="tol-mode-pay-p1">
+                                <span class="tol-radio" id="release-charge"></span>付费
+                            </div>
+                            <div class="tol-pos charge-amount" style="display: none">
+                                <div class="tol-charge-rule">
+                                    <div class="release-charge-c1"><i>￥</i><input type="text" min="0.01" id="week_val"><span class="release-charge-h2">/ 周</span></div>
+                                    <div class="release-charge-c1 release-charge-h1">
+                                        <span class="suggest_price">基准价（元）：</span><span id="sug_week_price" class="get_suggest_price"></span>
+                                    </div>
+                                </div>
+                                <div class="tol-charge-rule">
+                                    <div class="release-charge-c1"><i>￥</i><input type="text" min="0.01" id="month_val"><span class="release-charge-h2">/ 月</span></div>
+                                    <div class="release-charge-c1 release-charge-h1" style="display: none">
+                                        <span class="suggest_price">建议95折：</span>
+                                        <span id="sug_month_price" class="get_suggest_price">0</span>
+                                    </div>
+                                </div>
+                                <div class="tol-charge-rule">
+                                    <div class="release-charge-c1"><i>￥</i><input type="text" min="0.01" id="year_val"><span class="release-charge-h2">/ 年</span></div>
+                                    <div class="release-charge-c1 release-charge-h1" style="display: none">
+                                        <span class="suggest_price">建议85折：</span>
+                                        <span id="sug_year_price" class="get_suggest_price">0</span>
+                                    </div>
+                                </div>
+                                <div class="tol-charge-rule">
+                                    <div class="release-charge-c1 release-charge-c2"><i>￥</i><input type="text" min="0.01" id="forver_val"><span class="release-charge-h2">/ 永久使用</span></div>
+                                    <div class="release-charge-c1 release-charge-h1" style="display: none">
+                                        <span class="suggest_price">建议75折：</span>
+                                        <span id="sug_forver_price" class="get_suggest_price">0</span>
+                                    </div>
+                                </div>
+                                <div class="release_tip_1">周、月、年、永久使用必须同时设置</div>
+                            </div>
+                        </div>
+                                        </div>
+            </div>
+            <div class="tol-det" id="free-term" style="display: none">
+                <span class="tol-key tol-key-necessary">免费试用期</span>
+                <select class="pro-fl free-term">
+                    <option value="0">0天</option>
+                    <option value="1 day">1天</option>
+                    <option value="2 day">2天</option>
+                    <option value="3 day">3天</option>
+                </select>
+            </div>
+        </div>
+        <div class="tool-info" id="section-4" style="display: none">
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary tol-pro-intro">工具简介</span>
+                <textarea class="tol-introduction" placeholder="请在这里介绍你的插件"></textarea>
+            </div>
+            <div class="tol-det">
+                <span class="tol-key tol-key-necessary tol-pro-intro">功能说明</span>
+                <span class="function-zone">
+                    <script type="text/plain" id="editor"></script>
+                </span>
+                <div class="hot-label">
+                </div>
+            </div>
+            <div class="tol-det">
+                <span class="tol-key">热门标签</span>
+                <input class="tol-inp hot-input" type="text" maxlength="100" placeholder="输入标签">
+                <div class="get-label">自动获取标签>></div>
+            </div>
+        </div>
+        <div class="tool-info" id="section-5"  style="display: none">
+        <div class="tol-det" id="white-list-wrap">
+                <div class="tol-inv">
+                    <span class="tol-key tol-inv-sli">免费用户</span>
+                    <div id="invite-white-user" class="tol-invite-s1">
+                        <div class="tol-invite-w2">
+                            <div class="tol-invite-w1"><input type="text" placeholder="输入白名单用户"></div>
+                            <p style="padding-top: 8px;">该名单中的用户，可以免费使用该插件，不可以查看该插件的源代码。</p>
+                        </div>
+                        <div class="invite-list" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="tol-inv">
+                    <div class="tol-inv-1" id="white-list"></div>
+                </div>
+            </div>        <div class="tol-det">
+                <div class="tol-inv">
+                    <span class="tol-key tol-inv-sli">邀测用户</span>
+                    <div id="invite-user" class="tol-invite-s1">
+                        <div class="tol-invite-w2">
+                            <div class="tol-invite-w1"><input type="text"  placeholder="输入你要邀请的用户"></div>
+                            <p>邀请参与测试的用户，在三天内为您的工具进行测试和评价，可以永久免费使用
+                                如果三天内没有做出测试和评价，将会被自动踢出测试名单。
+                            </p>
+                        </div>
+                        <div class="invite-list" style="display: none">
+                        </div>
+                    </div>
+                </div>
+                <div class="tol-inv">
+                    <div class="tol-inv-1" id="tol-inv-list">
+
+                    </div>
+                </div>
+            </div>        <div class="tol-det">
+                <div class="tol-inv">
+                    <span class="tol-key tol-inv-sli">限制用户</span>
+                    <div id="limit-user" class="tol-invite-s1">
+                        <div class="tol-invite-w2">
+                            <div class="tol-invite-w1"><input type="text" placeholder="输入你要限制的用户"></div>
+                            <p style="padding-top: 8px;">限制名单中的用户，在任何情况下也无法添加 / 使用您的工具</p>
+                        </div>
+                        <div class="invite-list" style="display: none">
+                        </div>
+                    </div>
+                </div>
+                <div class="tol-inv">
+                    <div class="tol-inv-1" id="limit-user-list">
+
+                    </div>
+                </div>
+            </div>            <div class="tol-det">
+                <span class="tol-key tol-key-necessary">代码授权</span>
+                <select class="tol-code-author">
+                    <option value="0">【完全保密】  --  任何人无法查看代码</option>
+                    <option value="1" >【用户保密】  --  开发者可以查看代码</option>
+                    <option value="2" >【完全开放】  --  所有人可以查看代码</option>
+                    <option value="3" >【邀测可见】  --  邀测的调试人员可以查看代码</option>
+                    <option value="4" >【免费用户】  --  只有名单中的人可以查看代码</option>
+                </select>
+            </div>
+            <div class="tol-det tool-submit">
+               <div class="release-btn1">
+                   <span class="whether-debug-agree"></span>
+                   <span>无须调试，我要申请直接上线。（不勾选，只发布到开发者个人空间中，用户无法查看，无法使用，可以后续申请上架）</span>
+               </div>
+                <div class="tool-sub-t">
+                    <span class="tol-sub-agree"></span>
+                    <span><label>同意</label><a href="/Open/upload" target="_blank">《上传协议书》</a></span>
+                </div>
+                <!--<div><span class="tool-sure">确定</span></div>-->
+            </div>
+        </div>
+        <div class="release-np-page"><span class="release-pre-page release-disable">上一步</span><span class="release-next-page">下一步</span></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="footer" data-qq="692125760">
+             <div class="footer-f1">
+                <div class="wp footer-bg1">
+                    <div class="footer-ff1 footer-about-us">
+                        <h3>关于我们</h3>
+
+                        <p>深圳云创享网络有限公司，以推动CG产业发展为己任，创造CG与互联网结合的新时代，于2015年初，强势入驻深圳市南山区科技园。
+我们具有两全其美的“世界”：拥有初创公司的气质，以及强大的后备资本支持，为每个参与者带来“产业革命"的契机。
+公司成立至今，不但与多家行业顶级或上市公司建立了战略合作关系，同时与众多企业达成业务合作往来。</p>
+                    </div>
+                    <div class="footer-ff1 footer-link">
+                        <h3>活动公告</h3>
+
+                        <p><a href="/Notice/reward.html">悬赏榜</a></p>
+
+                       
+                    </div>
+                                        <div class="footer-ff2">
+                        <h3>关注公共号</h3>
+                        <img src="/Public/Home/assets/images/zone.jpg?t=201633015">
+                        <p>马上关注，更多火热信息！</p>
+                    </div>
+                    <div class="clear"></div>
+                    <!-- <div class="footer-ff2 footer-link">
+                        <h3>待定区域</h3>
+                        <a href="#"><img src="/Public/Home/assets/images/zone.jpg?t=201633015"></a>
+                    </div> -->
+                </div>
+            </div>
+    <div class="footer-f2">
+        <div class="wp footer-bg2">
+            <p>TK.V5CG.COM</p>
+            <p>网站备案：粤ICP备15049944号 <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?271e81312a4cee99e3ea081f73a588d9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b02070d558abca9a01a875104381a593";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></p>
+        </div>
+    </div>
+    </div>
+<%include ../public/footer.html%>
+<script type="text/javascript" data-main="/assets/js/Index/index.js?t=20160301" src="/assets/js/libs/require-2.1.15.js"></script>
+</body>
+</html>

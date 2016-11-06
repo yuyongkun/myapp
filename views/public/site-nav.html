@@ -1,0 +1,46 @@
+<div class="header" data-login="0">
+    <div class="wp header-bg">
+        <a href="http://v5cg.com/" class="site-name">V5CG</a>
+        <div class="site-user">
+            <%if(!username){%>
+            <a href="/login">登录</a>
+            <span class="line-p">|</span>
+            <a href="/reg">注册</a>
+            <%}else{ %>
+            <a href="/user/user_center"><%=username%></a>
+            <span class="line-p">|</span>
+            <a href="/tool/release">发布工具</a>
+            <span class="line-p">|</span>
+            <a href="/doLogout">退出</a>
+            <%}%>
+        </div>
+    </div>
+</div>
+<div class="site-navigation">
+    <div class="wp">
+        <div class="site-wrap">
+            <ul>
+                <li><a href="http://tk.v5cg.com"><img src="/assets/images/logo-ycx.png" class="logo-ycx"></a></li>
+                <li>
+                    <a href="/" class="cur">首页</a>
+                </li><li>
+                <a href="/tools/">工具</a>
+            </li><li>
+                <a href="/open/">开放平台</a>
+            </li><li>
+                <a href="/toolkit/">客户端下载</a>
+            </li>                </ul>
+            <div class="site-search">
+                <div class="site-search-s1">
+                    <div class="site-search-s2">
+                        <span>工具</span>
+                        <i class="icon-caret-down"></i>
+                        <input type="text" placeholder="请输入你想查找的内容" id="search-input" onkeyup="if(event.keyCode == &quot;13&quot;){if(location.href.indexOf(&quot;search&quot;)!=-1)return;location.href=&quot;/tools/search?keyword=&quot;+this.value;}">
+                        <a class="icon-search" onclick="if(location.href.indexOf(&quot;search&quot;)!=-1)return;location.href=&quot;/tools/search?keyword=&quot;+document.getElementById(&quot;search-input&quot;).value;"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

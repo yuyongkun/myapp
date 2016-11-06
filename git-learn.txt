@@ -1,0 +1,24 @@
+一、创建版本库(repository)
+git init
+***ls -ah查看当前目录下的所有文件
+二、远程仓库GitHub
+1,主要用途：主要为本地git仓库提供远程托管服务。
+2,为什么GitHub需要SSH Key呢？
+由于你的本地Git仓库和远程GitHub仓库之间的传输是通过SSH加密的,GitHub需要识别出你推送的提交确实是你推送的，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。
+3,创建SSH Key
+ssh-keygen -t rsa -C "yuuyongkun4519@qq.com",
+如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。
+4,登陆GitHub，选择你的仓库（repository），进入“Account settings”,
+点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容
+5,添加远程仓库
+ 1）登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库。
+ 2）然后使用如下命令关联到远程仓库myapp：
+    git remote add origin git@github.com:yuyongkun/myapp.git
+ 3）把本地库的所有内容推送到远程库上
+    git push -u origin master
+    把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+    由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+
+
+

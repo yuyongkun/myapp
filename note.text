@@ -1,0 +1,2 @@
+// 启动mongod服务
+mongod -f D:\server\mongodb\mongod.conf

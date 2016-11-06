@@ -1,0 +1,59 @@
+body {
+    background-color: #eee;
+}
+.yxw-user{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dddddd;
+}
+.yxw-user a:hover{
+      text-decoration: none;
+}
+.yxw-logo{
+    float: left;
+    font-size: 34px;
+    padding: 6px 0;
+}
+.yxw-rg-log{
+    float: right;
+    padding: 20px 0;
+}
+.yxw-user:after{
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0px;
+    visibility: hidden;
+}
+.bg-primary {
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: 0;
+    padding: 10px 0px 10px 10px;
+}
+
+.yxw-r1 {
+    margin-top: 15px;
+}
+
+.yxw-title span {
+    float: left;
+    margin-top: 9px;
+    margin-right: 5px;
+    background-color: #717171;
+    color: #fff;
+    padding: 0px 3px;
+    border-radius: 2px;
+}
+
+.yxw-title h4 {
+    font-weight: bold;;
+}
+
+.yxw-img-s1 {
+    padding-right: 0px;
+}
+
+.yxw-img-s1 img {
+    width: 330px;
+    height: 183px;
+}
