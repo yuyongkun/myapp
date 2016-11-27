@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>去玩吧-首页</title>
+    <link href="assets/css/main.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    .release-wrap {
+        width: 300px;
+        margin: 0px auto;
+    }
+    
+    input,
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        padding: 5px;
+        margin: 10px auto;
+    }
+    
+    button {
+        padding: 5px 8px
+    }
+    </style>
+</head>
+
+<body>
+    <div class="release-wrap">
+        <form action="/release" method="post">
+            <input type="text" placeholder="请输入标题" name='release-title'>
+            <br>
+            <textarea placeholder="请输入内容" name='release-content'></textarea>
+            <br>
+            <button type="submit">提交</button>
+        </form>
+    </div>
+</body>
+
+</html>
