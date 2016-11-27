@@ -11,12 +11,14 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var settings = require('./settings');
 
+var flash = require('connect-flash');
+
 var app = express();
 var routes = require('./routes/route');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-app.engine('.html',ejs.__express); //app.set('view engine', 'ejs');
+app.engine('.html', ejs.__express); //app.set('view engine', 'ejs');
 // app.set('env','production');  //设置为生产环境
 app.use(favicon());
 app.use(logger('dev'));
@@ -31,8 +33,8 @@ app.use(session({
     secret: settings.cookieSecret,
     resave: false,
     saveUninitialized: true,
-    cookie:{
-        maxAge: 36000 // default session expiration is set to 1 hour
+    cookie: {
+        maxAge: 3600 * 1000 * 24 //设置有效期为一天
     },
     store: new MongoStore({
         db: settings.db,
@@ -40,6 +42,11 @@ app.use(session({
         port: 28018
     })
 }));
+app.use(flash());
+app.use(function(req, res, next) {
+    res.locals.error = req.flash('error');
+    next();
+});
 routes(app);
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

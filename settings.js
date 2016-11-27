@@ -1,6 +1,6 @@
 //数据库配置文件
 module.exports = {
     cookieSecret: 'microblogbyvoid',
-    db: 'yqw',
+    db: 'tk',
     host: 'localhost'
 };
