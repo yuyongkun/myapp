@@ -1,8 +1,8 @@
 var mongodb = require('./db');
 
-function Release(title, content) {
-    this.title = title;
-    this.content = content;
+function Release(release) {
+    this.title = release.title;
+    this.content = release.content;
 };
 module.exports = Release;
 Release.prototype.save = function save(callback) {
@@ -14,6 +14,7 @@ Release.prototype.save = function save(callback) {
         if (err) {
             return callback(err);
         }
+        console.log('发布接口:' + JSON.stringify(release));
         // 读取 release 集合
         db.collection('release', function(err, collection) {
             if (err) {
@@ -46,12 +47,16 @@ Release.get = function(callback) {
                 }
                 var list = [];
                 docs.forEach(function(doc, index) {
-                    var release = new Release(doc.title, doc.content);
+                    var release = new Release({
+                        title: doc.title,
+                        content: doc.content
+                    });
                     list.push(release);
                 });
+                
                 callback(err, list);
-            });
 
+            });
         });
-    });
+    })
 }

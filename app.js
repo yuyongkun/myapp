@@ -45,6 +45,8 @@ app.use(session({
 app.use(flash());
 app.use(function(req, res, next) {
     res.locals.error = req.flash('error');
+    res.locals.info = req.flash('info');
+    res.locals.username = req.session.user&&req.session.user.username;
     next();
 });
 routes(app);

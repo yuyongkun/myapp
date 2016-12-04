@@ -1,4 +1,5 @@
 var User = require('../models/user.js');
+var Release = require('../models/release.js');
 var crypto = require('crypto')
 module.exports = function(app) {
     // 检查用户没有登录跳转到登录页面
@@ -20,17 +21,24 @@ module.exports = function(app) {
     //首页
     app.get('/', function(req, res) {
         console.log('首页');
-        res.render('home/index', {
-            title: '宜趣网-首页'
+        Release.get(function(err, result) {
+            console.log('首页:'+result);
+            res.render('home/index', {
+                title: '知乎-首页',
+                list: result
+            });
         });
+
     });
     // 登录页面
+    app.get('/login', checkNotLogin);
     app.get('/login', function(req, res) {
         res.render('user/login', {
             title: '用户登陆 - 宜趣网'
         });
     });
     // 登录接口
+    app.post('/login', checkNotLogin);
     app.post('/login', function(req, res) {
         //生成口令的散列值
         var md5 = crypto.createHash('md5');
@@ -64,6 +72,7 @@ module.exports = function(app) {
         });
     });
     // 登出接口
+    app.get('/logout', checkLogin);
     app.get('/logout', function(req, res) {
         console.log('登出接口:' + JSON.stringify(req.session));
         if (req.session.user) {
@@ -72,86 +81,103 @@ module.exports = function(app) {
         }
     });
     // 注册页面
+    app.get('/reg', checkNotLogin);
     app.get('/reg', function(req, res) {
         res.render('user/register', {
             title: '用户注册 - 宜趣网'
         });
     });
     // 注册接口
+    app.post('/reg', checkNotLogin);
     app.post('/reg', function(req, res) {
+        console.log('注册接口');
         var username = req.body['username'];
-        var email = req.body['email'];
+        var repeat_username = req.body['repeat-username'];
         var password = req.body['password'];
+        console.log('username:' + username + ',repeat_username:' + repeat_username + ',password:' + password);
         if (username == '') {
-            res.json({
-                info: '用户名不能为空',
-                status: false
-            });
-            return;
-
+            req.flash('error', '请输入用户名');
+            return res.redirect('/reg');
         }
-        //        if (email == '') {
-        //            res.json({
-        //                info: '邮箱不能为空',
-        //                status: false
-        //            });
-        //            return;
-        //        }
+        if (repeat_username == '') {
+            req.flash('error', '请再次输入用户名');
+            return res.redirect('/reg');
+        }
         if (password == '') {
-            res.json({
-                info: '密码不能为空',
-                status: false
-            });
-            return;
+            req.flash('error', '请输入密码');
+            return res.redirect('/reg');
         }
+        if (repeat_username !== username) {
+            req.flash('error', '两次用户名输入不一致');
+            return res.redirect('/reg');
+        }
+
         //生成口令的散列值
         var md5 = crypto.createHash('md5');
         var password = md5.update(password).digest('base64');
         var newUser = new User({
             username: username,
+            repeat_username: repeat_username,
             password: password
         });
         //检查用户名是否已经存在
         User.get(newUser.username, function(err, user) {
             if (user) {
-                res.json({
-                    info: '用户名已存在',
-                    status: false
-                });
-                return;
+                req.flash('error', '用户已存在请重新输入');
+                return res.redirect('/reg');
             }
             if (err) {
-                res.json({
-                    info: err,
-                    status: false
-                });
-                return;
+                req.flash('error', err);
+                return res.redirect('/reg');
             }
             //如果不存在则新增用户
             newUser.save(function(err) {
                 if (err) {
-                    res.json({
-                        info: err,
-                        status: false
-                    });
-                    return;
+                    req.flash('error', err);
+                    return res.redirect('/reg');
                 }
                 req.session.user = newUser;
-                console.log('注册接口-session:' + JSON.stringify(req.session));
-                res.json({
-                    info: '注册成功',
-                    status: true
-                }); //res.send(req.body);
+                console.log('注册成功');
+                req.flash('info', '注册成功');
+                res.redirect('/');
             });
         });
     });
 
-    //工具发布页面
-    app.get('/release', checkLogin);
+    //发布页面
     app.get('/release', function(req, res) {
-        res.render('tool/release', {
-            title: '消息上传-宜趣网',
-            username: req.session.user ? req.session.user.username : null
+        res.render('admin/release', {
+            title: "内容发布页面"
         });
+
+    });
+
+    //发布接口
+    app.post('/release', function(req, res) {
+        var title = req.body['release-title'];
+        var content = req.body['release-content'];
+        if (title == '') {
+            req.flash('error', '请输入标题');
+            return res.redirect('/reg');
+        }
+        if (content == '') {
+            req.flash('error', '请输入发布内容');
+            return res.redirect('/reg');
+        }
+        var release = new Release({
+            title: title,
+            content: content
+        });
+        console.log('发布接口');
+        release.save(function(err, result) {
+            if (err) {
+                req.flash('err', err);
+                return res.redirect('/release');
+            }
+            console.log('发布成功');
+            req.flash('info', '发布成功');
+            res.redirect('/release');
+        });
+
     });
 };

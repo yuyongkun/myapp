@@ -1,59 +1,89 @@
+* {
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+img {
+    border: 0
+}
+
 body {
-    background-color: #eee;
-}
-.yxw-user{
-    margin-bottom: 10px;
-    border-bottom: 1px solid #dddddd;
-}
-.yxw-user a:hover{
-      text-decoration: none;
-}
-.yxw-logo{
-    float: left;
-    font-size: 34px;
-    padding: 6px 0;
-}
-.yxw-rg-log{
-    float: right;
-    padding: 20px 0;
-}
-.yxw-user:after{
-    clear: both;
-    content: '.';
-    display: block;
-    height: 0px;
-    visibility: hidden;
-}
-.bg-primary {
-    margin-left: -15px;
-    margin-right: -15px;
-    margin-top: 0;
-    padding: 10px 0px 10px 10px;
+    font: 12px/1.5 arial,tahoma,'Hiragino Sans GB','\5b8b\4f53',sans-serif;
+    height: 100%;
+    color: #333;
+    background-color: #f2f2f2
 }
 
-.yxw-r1 {
-    margin-top: 15px;
+html {
+    height: 100%
 }
 
-.yxw-title span {
-    float: left;
-    margin-top: 9px;
-    margin-right: 5px;
-    background-color: #717171;
+a,p {
+    color: #444;
+    text-decoration: none;
+    word-wrap: break-word
+}
+
+i {
+    font-style: normal
+}
+
+li {
+    list-style: none
+}
+.navigation{
+    background-color: #0767c8;
+    height: 58px;
+    line-height: 58px;
+    overflow: hidden;
     color: #fff;
-    padding: 0px 3px;
-    border-radius: 2px;
 }
-
-.yxw-title h4 {
-    font-weight: bold;;
+.zh-wrap{
+width: 1200px;
+margin: 0px auto;
 }
-
-.yxw-img-s1 {
-    padding-right: 0px;
+.navigation a{
+    font-size: 14px;
+    color: #fff;
 }
-
-.yxw-img-s1 img {
-    width: 330px;
-    height: 183px;
+.navigation .zh-logo{
+    padding-left: 15px
+}
+ul.nav{
+    display: inline-block;
+        vertical-align: middle;
+        margin-left: 200px;
+}
+ul.nav .active{
+    background-color: #055fb8;
+}
+ul.nav li{
+    display: inline-block;
+}
+ul.nav li a{
+    display: block;
+    padding:0px 10px;
+}
+.zh-user{
+float: right;
+padding-right: 15px;
+}
+.zh-wrap{
+    padding:15px 0px;
+}
+.zh-item{
+    margin-bottom: 15px;
+}
+.img-responsive{
+    float: left;
+    margin-right: 15px;
+}
+.zh-content{
+    overflow: hidden;
 }

@@ -39,6 +39,12 @@
             <textarea placeholder="请输入内容" name='release-content'></textarea>
             <br>
             <button type="submit">提交</button>
+            <%if(error){%>
+                <p style="color:red;"><%=error%></p>
+            <%}%>
+             <%if(info){%>
+                <p style="color:green;"><%=info%></p>
+            <%}%>
         </form>
     </div>
 </body>
