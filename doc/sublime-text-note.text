@@ -1,7 +1,7 @@
 常用插件：
 1，html自动补全：emmet
 2，html,css,js格式化：html-css-js prettify
-3，文件自动保存：auto-save
+3，文件自动保存：Preference->Settings-User   "save_on_focus_lost": true
 4，提示js，css，html等错误：
 	1)先安装的sublimelinter---（SublimeLinter是Sublime的一个代码检测工具插件，安装SublimeLinter前必须安装node.js）
 	2)再安装sublimeLinter-contrib-htmlhint---（sublimeLinter-contrib-htmlhint看成是SublimeLinter的一个插件）

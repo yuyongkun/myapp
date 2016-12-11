@@ -1,3 +1,3 @@
 var a = 1;
- console.log(a4*cc;
+ console.log(as);
  var b=2;
