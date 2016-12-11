@@ -1,3 +1,3 @@
 var a = 1;
- console.log(as);
+ console.log(ass);
  var b=2;
