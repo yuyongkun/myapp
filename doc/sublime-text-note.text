@@ -1,0 +1,13 @@
+常用插件：
+1，html自动补全：emmet
+2，html,css,js格式化：html-css-js prettify
+3，文件自动保存：auto-save
+4，提示js，css，html等错误：
+	1)先安装的sublimelinter---（SublimeLinter是Sublime的一个代码检测工具插件，安装SublimeLinter前必须安装node.js）
+	2)再安装sublimeLinter-contrib-htmlhint---（sublimeLinter-contrib-htmlhint看成是SublimeLinter的一个插件）
+	3)安装xg-htmlhint：npm install -g xg-htmlhint
+	4)安装jshint和csslint 
+		Sublime​Linter-csslint   
+	    Sublime​Linter-jshint
+	5)打开nodejs的CDM窗口，输入命令安装npm install jshint,npm install csslint
+5,autofilename:自动提示	
