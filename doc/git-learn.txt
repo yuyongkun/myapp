@@ -1,297 +1,69 @@
-问题1：如何提交所有文件?
-git add xx命令可以将xx文件添加到暂存区，如果有很多改动可以通过 git add -A .来一次添加所有改变的文件。
-注意 -A 选项后面还有一个句点。 git add -A表示添加所有内容， git add . 表示添加新文件和编辑过的文件不包括删除的文件; git add -u 表示添加编辑或者删除的文件，不包括新添加的文件。
-
-问题2：修改出错的时候版本如何回退?
-场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
-场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
-场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
-
-问题3：如何提交到远程服务器?
-要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；
-关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
-此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
-
-问题4：如何预览github上页面：
-http://htmlpreview.github.io/?https://github.com/yuyongkun/myapp/blob/master/views/home/index.html
-
-安装Git
-
-最早Git是在Linux上开发的，很长一段时间内，Git也只能在Linux和Unix系统上跑。不过，慢慢地有人把它移植到了Windows上。现在，Git可以在Linux、Unix、Mac和Windows这几大平台上正常运行了。
-
-要使用Git，第一步当然是安装Git了。根据你当前使用的平台来阅读下面的文字：
-
-在Linux上安装Git
-
-首先，你可以试着输入git，看看系统有没有安装Git：
-
-$ git
-The program 'git' is currently not installed. You can install it by typing:
-sudo apt-get install git
-像上面的命令，有很多Linux会友好地告诉你Git没有安装，还会告诉你如何安装Git。
-
-如果你碰巧用Debian或Ubuntu Linux，通过一条sudo apt-get install git就可以直接完成Git的安装，非常简单。
-
-
-0:00
-
- 老一点的Debian或Ubuntu Linux，要把命令改为sudo apt-get install git-core，因为以前有个软件也叫GIT（GNU Interactive Tools），结果Git就只能叫git-core了。由于Git名气实在太大，后来就把GNU Interactive Tools改成gnuit，git-core正式改为git。
-
-如果是其他Linux版本，可以直接通过源码安装。先从Git官网下载源码，然后解压，依次输入：./config，make，sudo make install这几个命令安装就好了。
-
-在Mac OS X上安装Git
-
-如果你正在使用Mac做开发，有两种安装Git的方法。
-
-一是安装homebrew，然后通过homebrew安装Git，具体方法请参考homebrew的文档：http://brew.sh/。
-
-第二种方法更简单，也是推荐的方法，就是直接从AppStore安装Xcode，Xcode集成了Git，不过默认没有安装，你需要运行Xcode，选择菜单“Xcode”->“Preferences”，在弹出窗口中找到“Downloads”，选择“Command Line Tools”，点“Install”就可以完成安装了。
-
-install-git-by-xcode
-
-Xcode是Apple官方IDE，功能非常强大，是开发Mac和iOS App的必选装备，而且是免费的！
-
-在Windows上安装Git
-
-实话实说，Windows是最烂的开发平台，如果不是开发Windows游戏或者在IE里调试页面，一般不推荐用Windows。不过，既然已经上了微软的贼船，也是有办法安装Git的。
-
-Windows下要使用很多Linux/Unix的工具时，需要Cygwin这样的模拟环境，Git也一样。Cygwin的安装和配置都比较复杂，就不建议你折腾了。不过，有高人已经把模拟环境和Git都打包好了，名叫msysgit，只需要下载一个单独的exe安装程序，其他什么也不用装，绝对好用。
-
-msysgit是Windows版的Git，从https://git-for-windows.github.io下载（网速慢的同学请移步国内镜像），然后按默认选项安装即可。
-
-安装完成后，在开始菜单里找到“Git”->“Git Bash”，蹦出一个类似命令行窗口的东西，就说明Git安装成功！
-
-install-git-on-windows
-
-安装完成后，还需要最后一步设置，在命令行输入：
-
-$ git config --global user.name "Your Name"
-$ git config --global user.email "email@example.com"
-因为Git是分布式版本控制系统，所以，每个机器都必须自报家门：你的名字和Email地址。你也许会担心，如果有人故意冒充别人怎么办？这个不必担心，首先我们相信大家都是善良无知的群众，其次，真的有冒充的也是有办法可查的。
-
-注意git config命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。
-------------------------------------------------------------------------------
-创建版本库
-
-阅读: 1075091
-什么是版本库呢？版本库又名仓库，英文名repository，你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
-
-所以，创建一个版本库非常简单，首先，选择一个合适的地方，创建一个空目录：
-
-$ mkdir learngit
-$ cd learngit
-$ pwd
-/Users/michael/learngit
-pwd命令用于显示当前目录。在我的Mac上，这个仓库位于/Users/michael/learngit。
-
-如果你使用Windows系统，为了避免遇到各种莫名其妙的问题，请确保目录名（包括父目录）不包含中文。
-
-第二步，通过git init命令把这个目录变成Git可以管理的仓库：
-
-$ git init
-Initialized empty Git repository in /Users/michael/learngit/.git/
-瞬间Git就把仓库建好了，而且告诉你是一个空的仓库（empty Git repository），细心的读者可以发现当前目录下多了一个.git的目录，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。
-
-如果你没有看到.git目录，那是因为这个目录默认是隐藏的，用ls -ah命令就可以看见。
-
-
-0:15
-
- 也不一定必须在空目录下创建Git仓库，选择一个已经有东西的目录也是可以的。不过，不建议你使用自己正在开发的公司项目来学习Git，否则造成的一切后果概不负责。
-
-把文件添加到版本库
-
-首先这里再明确一下，所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。
-
-不幸的是，Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。
-
-因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。
-
-使用Windows的童鞋要特别注意：
-
-千万不要使用Windows自带的记事本编辑任何文本文件。原因是Microsoft开发记事本的团队使用了一个非常弱智的行为来保存UTF-8编码的文件，他们自作聪明地在每个文件开头添加了0xefbbbf（十六进制）的字符，你会遇到很多不可思议的问题，比如，网页第一行可能会显示一个“?”，明明正确的程序一编译就报语法错误，等等，都是由记事本的弱智行为带来的。建议你下载Notepad++代替记事本，不但功能强大，而且免费！记得把Notepad++的默认编码设置为UTF-8 without BOM即可：
-
-set-utf8-notepad++
-
-言归正传，现在我们编写一个readme.txt文件，内容如下：
-
-Git is a version control system.
-Git is free software.
-一定要放到learngit目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git再厉害也找不到这个文件。
-
-和把大象放到冰箱需要3步相比，把一个文件放到Git仓库只需要两步。
-
-第一步，用命令git add告诉Git，把文件添加到仓库：
-
-$ git add readme.txt
-执行上面的命令，没有任何显示，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。
-
-第二步，用命令git commit告诉Git，把文件提交到仓库：
-
-$ git commit -m "wrote a readme file"
-[master (root-commit) cb926e7] wrote a readme file
- 1 file changed, 2 insertions(+)
- create mode 100644 readme.txt
-
-0:16
-
- 简单解释一下git commit命令，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。
-
-嫌麻烦不想输入-m "xxx"行不行？确实有办法可以这么干，但是强烈不建议你这么干，因为输入说明对自己对别人阅读都很重要。实在不想输入说明的童鞋请自行Google，我不告诉你这个参数。
-
-git commit命令执行成功后会告诉你，1个文件被改动（我们新添加的readme.txt文件），插入了两行内容（readme.txt有两行内容）。
-
-为什么Git添加文件需要add，commit一共两步呢？因为commit可以一次提交很多文件，所以你可以多次add不同的文件，比如：
-
-$ git add file1.txt
-$ git add file2.txt file3.txt
-$ git commit -m "add 3 files."
-小结
-
-现在总结一下今天学的两点内容：
-
-初始化一个Git仓库，使用git init命令。
-
-添加文件到Git仓库，分两步：
-
-第一步，使用命令git add <file>，注意，可反复多次使用，添加多个文件；
-
-第二步，使用命令git commit，完成。
-----------------------------------------------------------------------------------
-时光机穿梭
-
-阅读: 628595
-我们已经成功地添加并提交了一个readme.txt文件，现在，是时候继续工作了，于是，我们继续修改readme.txt文件，改成如下内容：
-
-Git is a distributed version control system.
-Git is free software.
-现在，运行git status命令看看结果：
-
-$ git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#    modified:   readme.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-git status命令可以让我们时刻掌握仓库当前的状态，上面的命令告诉我们，readme.txt被修改过了，但还没有准备提交的修改。
-
-虽然Git告诉我们readme.txt被修改了，但如果能看看具体修改了什么内容，自然是很好的。比如你休假两周从国外回来，第一天上班时，已经记不清上次怎么修改的readme.txt，所以，需要用git diff这个命令看看：
-
-$ git diff readme.txt 
-diff --git a/readme.txt b/readme.txt
-index 46d49bf..9247db6 100644
---- a/readme.txt
-+++ b/readme.txt
-@@ -1,2 +1,2 @@
--Git is a version control system.
-+Git is a distributed version control system.
- Git is free software.
-git diff顾名思义就是查看difference，显示的格式正是Unix通用的diff格式，可以从上面的命令输出看到，我们在第一行添加了一个“distributed”单词。
-
-知道了对readme.txt作了什么修改后，再把它提交到仓库就放心多了，提交修改和提交新文件是一样的两步，第一步是git add：
-
-$ git add readme.txt
-同样没有任何输出。在执行第二步git commit之前，我们再运行git status看看当前仓库的状态：
-
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   readme.txt
-#
-git status告诉我们，将要被提交的修改包括readme.txt，下一步，就可以放心地提交了：
-
-$ git commit -m "add distributed"
-[master ea34578] add distributed
- 1 file changed, 1 insertion(+), 1 deletion(-)
-提交后，我们再用git status命令看看仓库的当前状态：
-
-$ git status
-# On branch master
-nothing to commit (working directory clean)
-Git告诉我们当前没有需要提交的修改，而且，工作目录是干净（working directory clean）的。
-
-
-0:35
-
-小结
-
-要随时掌握工作区的状态，使用git status命令。
-
-如果git status告诉你有文件被修改过，用git diff可以查看修改内容。
---------------------------------------------------------------
-
-管理修改
-小结
-
-现在，你又理解了Git是如何跟踪修改的，每次修改，如果不add到暂存区，那就不会加入到commit中。
-
------------------------------------------------------------
-git checkout -- readme.txt：
-意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
-
-一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
-
-一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
-
-总之，就是让这个文件回到最近一次git commit或git add时的状态。
-
-小结：
-又到了小结时间。
-
-场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
-
-场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
-
-场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+pwd:用于显示当前目录
+ls -ah:显示所有目录包括隐藏目录
+git fetch：相当于是从远程获取最新版本到本地，不会自动merge
+Git fetch origin master
+git log -p master..origin/master
+git merge origin/master
+以上命令的含义：
+首先从远程的origin的master主分支下载最新的版本到origin/master分支上
+然后比较本地的master分支和origin/master分支的差别
+最后进行合并
+上述过程其实可以用以下更清晰的方式来进行：
+git fetch origin master:tmp
+git diff tmp 
+git merge tmp
+从远程获取最新的版本到本地的test分支上
+之后再进行比较合并
+
+
+git pull：相当于是从远程获取最新版本并merge到本地
+git pull origin master
+
+上述命令其实相当于git fetch 和 git merge
+在实际使用中，git fetch更安全一些
+因为在merge前，我们可以查看更新情况，然后再决定是否合并
+
+
+比较本地库与远程库
+方法一：
+1、获取远程库
+git pull origin master:temp
+命令的意思是：从远程的origin仓库的master分支下载到本地并新建一个分支temp
+2、比较不同
+git diff temp
+命令的意思是：比较master分支和temp分支的不同
+方法二：
+假定远端库名为 origin, 你要比较的本地分支为 test, 远端分支为 xxx
+1，获取远端库最新信息
+git fetch origin
+2，做diff
+git diff test origin/xxx 本地和远程比较
+git diff 查看尚未暂存的文件更新了哪些部分
+
+git diff filename 查看尚未暂存的某个文件更新了哪些
+
+git diff –cached 查看已经暂存起来的文件和上次提交的版本之间的差异
+
+git diff –cached filename 查看已经暂存起来的某个文件和上次提交的版本之间的差异
+
+git log命令显示从最近到最远的提交日志
+git log --pretty=oneline
+
+使用技巧总结:
+以app.js为例
+1,先查看app.js文件状态 
+git status app.js
+2,查看app.js文件提交记录(下面命令查看最近两次的提交记录)
+git log --pretty=oneline -2 app.js
+3,对比文件差距
+git diff 91091 --cached app.js(文件已暂存)
+git diff 91091 app.js
+----------------------------------------------------
+git reset --hard 3628164:回退到版本3628164(不加提交版本则回退到最新的提交状态)
+git log可以查看提交历史，以便确定要回退到哪个版本。
+要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
 
 ----------------------------------------
-git rm：删除该文件
-执行git commit将彻底删除文件，如果未提交可以git checkout -- test.txt恢复
-
----------------------------------------------------------------
-
-远程仓库gitHub
-github为git仓库提供托管服务。
-由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置：
-第1步：创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：
-
-$ ssh-keygen -t rsa -C "youremail@example.com"
---------------------------------------
-添加远程库
-git remote add origin git@github.com:michaelliao/learngit.git
-
-把本地库的所有内容推送到远程库上
-git push -u origin master
-把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
-
-由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
-
-小结：
-
-要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；
-
-关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
-
-此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
-
-分布式版本系统的最大好处之一是在本地工作完全不需要考虑远程库的存在，也就是有没有联网都可以正常工作，而SVN在没有联网的时候是拒绝干活的！当有网络的时候，再把本地提交推送一下就完成了同步，真是太方便了！
-
-
-
-预览github上页面
-http://htmlpreview.github.io/
--------------------------------------
-创建合并分支
-
-小结
-
-Git鼓励大量使用分支：
-
 查看分支：git branch
 
 创建分支：git branch <name>
@@ -303,233 +75,4 @@ Git鼓励大量使用分支：
 合并某分支到当前分支：git merge <name>
 
 删除分支：git branch -d <name>
-
--------------------------------------
-
-Bug分支
-小结
-
-修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
-
-当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场。
----------------------------------------------------
-多人协作
-
-
-当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。
-
-要查看远程库的信息，用git remote：
-
-$ git remote
-origin
-或者，用git remote -v显示更详细的信息：
-
-$ git remote -v
-origin  git@github.com:michaelliao/learngit.git (fetch)
-origin  git@github.com:michaelliao/learngit.git (push)
-上面显示了可以抓取和推送的origin的地址。如果没有推送权限，就看不到push的地址。
-
-推送分支
-
-推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
-
-$ git push origin master
-如果要推送其他分支，比如dev，就改成：
-
-$ git push origin dev
-但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
-
-master分支是主分支，因此要时刻与远程同步；
-
-dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
-
-bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
-
-feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
-
-总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！
-------------------------------------------------------------
-
-标签管理
-
-阅读: 119829
-发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。
-
-Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和删除标签都是瞬间完成的。
-
-Git有commit，为什么还要引入tag？
-
-“请把上周一的那个版本打包发布，commit号是6a5819e...”
-
-“一串乱七八糟的数字不好找！”
-
-如果换一个办法：
-
-“请把上周一的那个版本打包发布，版本号是v1.2”
-
-“好的，按照tag v1.2查找commit就行！”
-
-所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
-
-
-----------------------------
-创建标签
-
-在Git中打标签非常简单，首先，切换到需要打标签的分支上：
-
-$ git branch
-* dev
-  master
-$ git checkout master
-Switched to branch 'master'
-然后，敲命令git tag <name>就可以打一个新标签：
-
-$ git tag v1.0
-可以用命令git tag查看所有标签：
-
-$ git tag
-v1.0
-默认标签是打在最新提交的commit上的。有时候，如果忘了打标签，比如，现在已经是周五了，但应该在周一打的标签没有打，怎么办？
-
-方法是找到历史提交的commit id，然后打上就可以了：
-
-$ git log --pretty=oneline --abbrev-commit
-6a5819e merged bug fix 101
-cc17032 fix bug 101
-7825a50 merge with no-ff
-6224937 add merge
-59bc1cb conflict fixed
-400b400 & simple
-75a857c AND simple
-fec145a branch test
-d17efd8 remove test.txt
-...
-比方说要对add merge这次提交打标签，它对应的commit id是6224937，敲入命令：
-
-$ git tag v0.9 6224937
-再用命令git tag查看标签：
-
-$ git tag
-v0.9
-v1.0
-注意，标签不是按时间顺序列出，而是按字母排序的。可以用git show <tagname>查看标签信息：
-
-$ git show v0.9
-commit 622493706ab447b6bb37e4e2a2f276a20fed2ab4
-Author: Michael Liao <askxuefeng@gmail.com>
-Date:   Thu Aug 22 11:22:08 2013 +0800
-
-    add merge
-...
-可以看到，v0.9确实打在add merge这次提交上。
-
-还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：
-
-$ git tag -a v0.1 -m "version 0.1 released" 3628164
-用命令git show <tagname>可以看到说明文字：
-
-$ git show v0.1
-tag v0.1
-Tagger: Michael Liao <askxuefeng@gmail.com>
-Date:   Mon Aug 26 07:28:11 2013 +0800
-
-version 0.1 released
-
-commit 3628164fb26d48395383f8f31179f24e0882e1e0
-Author: Michael Liao <askxuefeng@gmail.com>
-Date:   Tue Aug 20 15:11:49 2013 +0800
-
-    append GPL
-还可以通过-s用私钥签名一个标签：
-
-$ git tag -s v0.2 -m "signed version 0.2 released" fec145a
-签名采用PGP签名，因此，必须首先安装gpg（GnuPG），如果没有找到gpg，或者没有gpg密钥对，就会报错：
-
-gpg: signing failed: secret key not available
-error: gpg failed to sign the data
-error: unable to sign the tag
-如果报错，请参考GnuPG帮助文档配置Key。
-
-用命令git show <tagname>可以看到PGP签名信息：
-
-$ git show v0.2
-tag v0.2
-Tagger: Michael Liao <askxuefeng@gmail.com>
-Date:   Mon Aug 26 07:28:33 2013 +0800
-
-signed version 0.2 released
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (Darwin)
-
-iQEcBAABAgAGBQJSGpMhAAoJEPUxHyDAhBpT4QQIAKeHfR3bo...
------END PGP SIGNATURE-----
-
-commit fec145accd63cdc9ed95a2f557ea0658a2a6537f
-Author: Michael Liao <askxuefeng@gmail.com>
-Date:   Thu Aug 22 10:37:30 2013 +0800
-
-    branch test
-用PGP签名的标签是不可伪造的，因为可以验证PGP签名。验证签名的方法比较复杂，这里就不介绍了。
-
-
-1:21
-
-小结
-
-命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id；
-
-git tag -a <tagname> -m "blablabla..."可以指定标签信息；
-
-git tag -s <tagname> -m "blablabla..."可以用PGP签名标签；
-
-命令git tag可以查看所有标签。
-
-
------------------------------------
-操作标签
-
-阅读: 107913
-如果标签打错了，也可以删除：
-
-$ git tag -d v0.1
-Deleted tag 'v0.1' (was e078af9)
-因为创建的标签都只存储在本地，不会自动推送到远程。所以，打错的标签可以在本地安全删除。
-
-如果要推送某个标签到远程，使用命令git push origin <tagname>：
-
-$ git push origin v1.0
-Total 0 (delta 0), reused 0 (delta 0)
-To git@github.com:michaelliao/learngit.git
- * [new tag]         v1.0 -> v1.0
-或者，一次性推送全部尚未推送到远程的本地标签：
-
-$ git push origin --tags
-Counting objects: 1, done.
-Writing objects: 100% (1/1), 554 bytes, done.
-Total 1 (delta 0), reused 0 (delta 0)
-To git@github.com:michaelliao/learngit.git
- * [new tag]         v0.2 -> v0.2
- * [new tag]         v0.9 -> v0.9
-如果标签已经推送到远程，要删除远程标签就麻烦一点，先从本地删除：
-
-$ git tag -d v0.9
-Deleted tag 'v0.9' (was 6224937)
-然后，从远程删除。删除命令也是push，但是格式如下：
-
-$ git push origin :refs/tags/v0.9
-To git@github.com:michaelliao/learngit.git
- - [deleted]         v0.9
-要看看是否真的从远程库删除了标签，可以登陆GitHub查看。
-
-
-0:00
-
-小结
-
-命令git push origin <tagname>可以推送一个本地标签；
-
-命令git push origin --tags可以推送全部未推送过的本地标签；
-
-命令git tag -d <tagname>可以删除一个本地标签；
-
-命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
+-----------------------------------------------------------------------------------------
